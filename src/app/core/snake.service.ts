@@ -6,20 +6,24 @@ import { randomNumber } from './snake.helper';
   providedIn: 'root'
 })
 export class SnakeService {
+  public snake: Node[];
   public body: Node[];
   public head: Node;
   public food: Node;
   public direction: Direction;
   public timer: any;
+  public dimensions: Dimensions;
 
   public start(dimensions: Dimensions, period: number) {
+    this.dimensions = dimensions;
     this.head = this.generateRandomNode(dimensions);
 
     this.food = this.generateRandomNode(dimensions);
 
     this.direction = Direction.right;
 
-    this.body = [this.head];
+    this.body = [];
+    this.snake = [this.head];
 
     if (this.timer) {
       clearInterval(this.timer);
@@ -44,15 +48,27 @@ export class SnakeService {
 
   private newFrame() {
     const update = newPosition[this.direction]({...this.head});
-    this.head = this.updateNodePosition(this.head, update);
 
-    this.body = [...this.body];
+    if (this.eatsTheFood(update)) {
+      this.food = this.generateRandomNode(this.dimensions);
+    } else {
+      this.body.shift();
+    }
+
+    this.body.push({...this.head});
+
+    this.head = this.updateNodePosition(this.head, update);
+    this.snake = [...this.body, this.head];
   }
 
   private updateNodePosition(current: Node, update: Node): Node {
     current.x = update.x;
     current.y = update.y;
     return current;
+  }
+
+  private eatsTheFood(update: Node) {
+    return update.x === this.food.x && update.y === this.food.y;
   }
 
 }
