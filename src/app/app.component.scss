@@ -1,0 +1,14 @@
+.board {
+  position: relative;
+  width: 800px;
+  height: 800px;
+  background-color: #eee;
+  border: 1px solid red;
+}
+
+.snake-node {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: blue;
+}

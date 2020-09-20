@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Node } from './core/core.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'snake';
+  body: Node[] = [{x: 1, y: 1}, {x: 2, y: 1}, {x: 2, y: 2}];
 }
