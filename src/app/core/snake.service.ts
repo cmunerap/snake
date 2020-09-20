@@ -15,8 +15,9 @@ export class SnakeService {
   public direction: Direction;
   public timer: any;
   public dimensions: Dimensions;
-  public score: number;
+  public score = 0;
   public maxScore = 0;
+  private allowNewDirection = true;
 
   public start(dimensions: Dimensions, period: number) {
     this.score = 0;
@@ -37,11 +38,17 @@ export class SnakeService {
     this.timer = setInterval(this.newFrame.bind(this), period);
   }
 
+  private stop() {
+    this.maxScore = this.score > this.maxScore ? this.score : this.maxScore;
+    clearInterval(this.timer);
+  }
+
   public updateDirection(direction: Direction) {
-    if (!direction || direction === forbiddenDirection[this.direction]) {
+    if (!direction || !this.allowNewDirection || direction === forbiddenDirection[this.direction]) {
       return;
     }
     this.direction = direction;
+    this.allowNewDirection = false;
   }
 
   private generateRandomNode({width, height}: Dimensions): Node {
@@ -52,7 +59,13 @@ export class SnakeService {
   }
 
   private newFrame() {
+    this.allowNewDirection = true;
     const update = newPosition[this.direction]({...this.head});
+
+    if (this.hitsTheBody(update)) {
+      this.stop();
+    }
+
     let tail: Node;
 
     if (this.eatsTheFood(update)) {
@@ -90,8 +103,12 @@ export class SnakeService {
     return (new Date()).getTime() > this.foodPositionDue;
   }
 
-  private hitsTheBoundary(update: Node) {
+  private hitsTheBoundary(update: Node): boolean {
     return update.x < 0 || update.x > this.dimensions.width || update.y < 0 || update.y > this.dimensions.height;
+  }
+
+  private hitsTheBody(update: Node): boolean {
+    return this.body.some(node => node.x === update.x && node.y === update.y);
   }
 
   private updateNodePosition(current: Node, update: Node): Node {
