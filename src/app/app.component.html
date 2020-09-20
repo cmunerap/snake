@@ -1,6 +1,7 @@
 <div class="board">
   <div class="snake-node" *ngFor="let node of body"
-    [style.left.px]="node.x * 16"
-    [style.top.px]="node.y * 16"
+    [style.left.px]="(node.x - 1) * 16"
+    [style.top.px]="(node.y - 1) * 16"
   ></div>
 </div>
+<button (click)="start()">START</button>

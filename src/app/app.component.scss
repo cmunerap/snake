@@ -1,9 +1,11 @@
 .board {
+  margin: 0 auto;
   position: relative;
   width: 800px;
   height: 800px;
   background-color: #eee;
   border: 1px solid red;
+  overflow: hidden;
 }
 
 .snake-node {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Node } from './core/core.model';
+import { SnakeService } from './core/snake.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,13 @@ import { Node } from './core/core.model';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  body: Node[] = [{x: 1, y: 1}, {x: 2, y: 1}, {x: 2, y: 2}];
+  get body(): Node[] {
+    return this.snake.body;
+  }
+
+  constructor(private snake: SnakeService) { }
+
+  start() {
+    this.snake.start({ width: 50, height: 50 }, 500);
+  }
 }
