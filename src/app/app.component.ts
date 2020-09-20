@@ -8,11 +8,16 @@ import { SnakeService } from './core/snake.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  constructor(private snake: SnakeService) { }
+
   get body(): Node[] {
     return this.snake.body;
   }
 
-  constructor(private snake: SnakeService) { }
+  get food(): Node {
+    return this.snake.food;
+  }
 
   start() {
     this.snake.start({ width: 50, height: 50 }, 200);

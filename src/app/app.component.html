@@ -3,5 +3,9 @@
     [style.left.px]="(node.x - 1) * 16"
     [style.top.px]="(node.y - 1) * 16"
   ></div>
+  <div class="food" *ngIf="food"
+    [style.left.px]="(food.x - 1) * 16"
+    [style.top.px]="(food.y - 1) * 16"
+  ></div>
 </div>
 <button (click)="start()">START</button>
