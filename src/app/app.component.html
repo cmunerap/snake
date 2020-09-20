@@ -20,3 +20,14 @@
     <span>{{maxScore}}</span>
   </span>
 </div>
+
+<div class="modal" [ngClass]="{'modal--closed': closed}">
+  <div class="modal__score">
+    <label>Your score: </label>
+    <span>{{score}}</span>
+  </div>
+  <div class="modal__controls">
+    <button (click)="start()">Play Again</button>
+    <button (click)="close()">Close</button>
+  </div>
+</div>

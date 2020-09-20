@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Node, Dimensions, Direction, newPosition, forbiddenDirection } from './core.model';
 import { randomNumber } from './snake.helper';
 import { FoodExpirationInSeconds } from './settings';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class SnakeService {
   public dimensions: Dimensions;
   public score = 0;
   public maxScore = 0;
+  public ended$ = new Subject();
   private allowNewDirection = true;
 
   public start(dimensions: Dimensions, period: number) {
@@ -41,6 +43,7 @@ export class SnakeService {
   private stop() {
     this.maxScore = this.score > this.maxScore ? this.score : this.maxScore;
     clearInterval(this.timer);
+    this.ended$.next();
   }
 
   public updateDirection(direction: Direction) {

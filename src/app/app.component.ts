@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Node, KeyMapper } from './core/core.model';
 import { SnakeService } from './core/snake.service';
 
@@ -7,9 +7,14 @@ import { SnakeService } from './core/snake.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  closed = true;
 
   constructor(private snakeService: SnakeService) { }
+
+  ngOnInit(): void {
+    this.snakeService.ended$.subscribe(() => this.closed = false);
+  }
 
   get snake(): Node[] {
     return this.snakeService.snake;
@@ -28,7 +33,11 @@ export class AppComponent {
   }
 
   start() {
-    this.snakeService.start({ width: 50, height: 50 }, 200);
+    this.snakeService.start({ width: 50, height: 50 }, 100);
+  }
+
+  close() {
+    this.closed = true;
   }
 
   @HostListener('window:keyup', ['$event'])
