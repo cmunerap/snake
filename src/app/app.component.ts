@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Node } from './core/core.model';
+import { Component, HostListener } from '@angular/core';
+import { Node, KeyMapper } from './core/core.model';
 import { SnakeService } from './core/snake.service';
 
 @Component({
@@ -15,6 +15,14 @@ export class AppComponent {
   constructor(private snake: SnakeService) { }
 
   start() {
-    this.snake.start({ width: 50, height: 50 }, 500);
+    this.snake.start({ width: 50, height: 50 }, 200);
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    const direction = KeyMapper[event.keyCode];
+    if (direction){
+      this.snake.updateDirection(direction);
+    }
   }
 }

@@ -12,7 +12,7 @@ export class SnakeService {
   public direction: Direction;
   public timer: any;
 
-  start(dimensions: Dimensions, period: number) {
+  public start(dimensions: Dimensions, period: number) {
     this.head = this.generateRandomNode(dimensions);
 
     this.food = this.generateRandomNode(dimensions);
@@ -26,6 +26,10 @@ export class SnakeService {
     }
 
     this.timer = setInterval(this.newFrame.bind(this), period);
+  }
+
+  public updateDirection(direction: Direction) {
+    this.direction = direction ?? this.direction;
   }
 
   private generateRandomNode({width, height}: Dimensions): Node {

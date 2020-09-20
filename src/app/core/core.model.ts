@@ -9,10 +9,10 @@ export interface Dimensions {
 }
 
 export enum Direction {
-  up,
-  down,
-  left,
-  right
+  up = 'up',
+  down = 'down',
+  left = 'left',
+  right = 'right'
 }
 
 export const newPosition = {
@@ -20,4 +20,18 @@ export const newPosition = {
   [Direction.down]: (node: Node) => (node.y = node.y + 1, node),
   [Direction.left]: (node: Node) => (node.x = node.x - 1, node),
   [Direction.right]: (node: Node) => (node.x = node.x + 1, node),
+};
+
+enum KEYS {
+  up = 38,
+  down = 40,
+  right = 39,
+  left = 37
+}
+
+export const KeyMapper = {
+  [KEYS.up]: Direction.up,
+  [KEYS.down]: Direction.down,
+  [KEYS.left]: Direction.left,
+  [KEYS.right]: Direction.right,
 };
