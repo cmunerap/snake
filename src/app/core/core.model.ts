@@ -15,6 +15,13 @@ export enum Direction {
   right = 'right'
 }
 
+export const forbiddenDirection = {
+  [Direction.up]: Direction.down,
+  [Direction.down]: Direction.up,
+  [Direction.left]: Direction.right,
+  [Direction.right]: Direction.left,
+};
+
 export const newPosition = {
   [Direction.up]: (node: Node) => (node.y = node.y - 1, node),
   [Direction.down]: (node: Node) => (node.y = node.y + 1, node),

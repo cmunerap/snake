@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Node, Dimensions, Direction, newPosition } from './core.model';
+import { Node, Dimensions, Direction, newPosition, forbiddenDirection } from './core.model';
 import { randomNumber } from './snake.helper';
 
 @Injectable({
@@ -29,7 +29,10 @@ export class SnakeService {
   }
 
   public updateDirection(direction: Direction) {
-    this.direction = direction ?? this.direction;
+    if (!direction || direction === forbiddenDirection[this.direction]) {
+      return;
+    }
+    this.direction = direction;
   }
 
   private generateRandomNode({width, height}: Dimensions): Node {
