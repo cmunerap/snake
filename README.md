@@ -1,3 +1,2 @@
 # Snake
 
-this.generateRandomNode(dimensions);

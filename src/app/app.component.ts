@@ -9,25 +9,25 @@ import { SnakeService } from './core/snake.service';
 })
 export class AppComponent {
 
-  constructor(private snake: SnakeService) { }
+  constructor(private snakeService: SnakeService) { }
 
-  get body(): Node[] {
-    return this.snake.body;
+  get snake(): Node[] {
+    return this.snakeService.snake;
   }
 
   get food(): Node {
-    return this.snake.food;
+    return this.snakeService.food;
   }
 
   start() {
-    this.snake.start({ width: 50, height: 50 }, 200);
+    this.snakeService.start({ width: 50, height: 50 }, 200);
   }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     const direction = KeyMapper[event.keyCode];
     if (direction){
-      this.snake.updateDirection(direction);
+      this.snakeService.updateDirection(direction);
     }
   }
 }

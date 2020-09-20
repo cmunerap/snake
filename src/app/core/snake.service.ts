@@ -50,11 +50,12 @@ export class SnakeService {
 
   private newFrame() {
     const update = newPosition[this.direction]({...this.head});
+    let tail: Node;
 
     if (this.eatsTheFood(update)) {
       this.updateFoodPosition();
     } else {
-      this.body.shift();
+      tail = this.body.shift();
       if (this.isFoodPositionExpired()) {
         this.updateFoodPosition();
       }
@@ -62,7 +63,16 @@ export class SnakeService {
 
     this.body.push({...this.head});
 
-    this.head = this.updateNodePosition(this.head, update);
+    if (this.hitsTheBoundary(update)) {
+      this.body.reverse();
+      if (tail) {
+        this.head = this.updateNodePosition(this.head, tail);
+      }
+      this.direction = forbiddenDirection[this.direction];
+    } else {
+      this.head = this.updateNodePosition(this.head, update);
+    }
+
     this.snake = [...this.body, this.head];
   }
 
@@ -74,6 +84,10 @@ export class SnakeService {
 
   private isFoodPositionExpired(): boolean {
     return (new Date()).getTime() > this.foodPositionDue;
+  }
+
+  private hitsTheBoundary(update: Node) {
+    return update.x < 0 || update.x > this.dimensions.width || update.y < 0 || update.y > this.dimensions.height;
   }
 
   private updateNodePosition(current: Node, update: Node): Node {
