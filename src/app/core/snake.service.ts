@@ -15,8 +15,11 @@ export class SnakeService {
   public direction: Direction;
   public timer: any;
   public dimensions: Dimensions;
+  public score: number;
+  public maxScore = 0;
 
   public start(dimensions: Dimensions, period: number) {
+    this.score = 0;
     this.dimensions = dimensions;
     this.head = this.generateRandomNode(dimensions);
 
@@ -54,6 +57,7 @@ export class SnakeService {
 
     if (this.eatsTheFood(update)) {
       this.updateFoodPosition();
+      this.score++;
     } else {
       tail = this.body.shift();
       if (this.isFoodPositionExpired()) {

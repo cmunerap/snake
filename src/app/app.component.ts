@@ -19,6 +19,14 @@ export class AppComponent {
     return this.snakeService.food;
   }
 
+  get score(): number {
+    return this.snakeService.score;
+  }
+
+  get maxScore(): number {
+    return this.snakeService.maxScore;
+  }
+
   start() {
     this.snakeService.start({ width: 50, height: 50 }, 200);
   }

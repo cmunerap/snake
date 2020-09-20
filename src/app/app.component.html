@@ -8,4 +8,15 @@
     [style.top.px]="(food.y - 1) * 16"
   ></div>
 </div>
-<button (click)="start()">START</button>
+
+<div class="controls">
+  <button class="controls__start" (click)="start()">START</button>
+  <span class="controls__score">
+    <label>Score: </label>
+    <span>{{score}}</span>
+  </span>
+  <span class="controls__max">
+    <label>Max Score: </label>
+    <span>{{maxScore}}</span>
+  </span>
+</div>
